@@ -8,6 +8,10 @@ MACHINE_4=ec2-54-173-5-62.compute-1.amazonaws.com
 MACHINE_5=ec2-54-196-62-240.compute-1.amazonaws.com
 MACHINE=$MACHINE_MASTER
 
+#ssh to the machines
+ssh -y -i $WORK_DIR/spark_project.pem ubuntu@$MACHINE
+
+
 #copying spark_github key to machines, so they can clone from git
 for MACHINE in $MACHINE_MASTER $MACHINE_1 $MACHINE_2 $MACHINE_3 $MACHINE_4 $MACHINE_5
 do
@@ -22,18 +26,6 @@ do
         ubuntu@$MACHINE:/home/ubuntu/.bashrc
 done
 
-
-#stop cluster
-for MACHINE in $MACHINE_1 $MACHINE_2 $MACHINE_3 $MACHINE_4 $MACHINE_5
-do
-    ssh -y -i $WORK_DIR/spark_project.pem ubuntu@$MACHINE \
-    "./spark/sbin/stop-slave.sh"
-done
-ssh -y -i $WORK_DIR/spark_project.pem ubuntu@$MACHINE_MASTER "./spark/sbin/stop-master.sh"
-
-
-#ssh to the machines
-ssh -y -i $WORK_DIR/spark_project.pem ubuntu@$MACHINE
 
 #install java and scala
 ssh -y -i $WORK_DIR/spark_project.pem ubuntu@$MACHINE_1
@@ -62,7 +54,4 @@ cd /home/ubuntu/spark
 ./build/mvn -Pyarn -Phadoop-2.4 -Dhadoop.version=2.4.0 -DskipTests clean package
 ./build/mvn -Pyarn -Phadoop-2.4 -Dhadoop.version=2.4.0 -DskipTests package
 
-#pull and deploy from github
-git stash
-ssh -y -i $WORK_DIR/spark_project.pem ubuntu@$MACHINE_MASTER "cd ~/spark && git pull"
 JAVA_HOME=/usr/bin/java
