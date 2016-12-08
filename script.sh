@@ -2,7 +2,7 @@
 WORK_DIR=/home/xuewei/spark
 MACHINE_MASTER=ec2-52-90-185-40.compute-1.amazonaws.com
 MACHINE_1=ec2-54-175-142-41.compute-1.amazonaws.com
-MACHINE_2=ec2-54-208-215-40.compute-1.amazonaws.com
+MACHINE_2=ec2-54-165-241-95.compute-1.amazonaws.com
 MACHINE_3=ec2-54-91-70-126.compute-1.amazonaws.com
 MACHINE_4=ec2-54-173-5-62.compute-1.amazonaws.com
 MACHINE_5=ec2-54-196-62-240.compute-1.amazonaws.com
@@ -49,7 +49,7 @@ cd spark
 git checkout ec2_deploy
 
 #compile spark
-export MAVEN_OPTS="-Xmx512m -XX:ReservedCodeCacheSize=128m"
+export MAVEN_OPTS="-Xmx1g -XX:ReservedCodeCacheSize=256m"
 cd /home/ubuntu/spark
 ./build/mvn -Pyarn -Phadoop-2.4 -Dhadoop.version=2.4.0 -DskipTests clean package
 ./build/mvn -Pyarn -Phadoop-2.4 -Dhadoop.version=2.4.0 -DskipTests package
