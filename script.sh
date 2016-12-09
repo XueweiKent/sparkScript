@@ -10,6 +10,7 @@ MACHINE=$MACHINE_MASTER
 
 #ssh to the machines
 ssh -y -i $WORK_DIR/spark_project.pem ubuntu@$MACHINE
+ssh -y -i $WORK_DIR/spark_project.pem ubuntu@$MACHINE_MASTER
 
 
 #copying spark_github key to machines, so they can clone from git
@@ -24,6 +25,18 @@ do
     scp -i $WORK_DIR/spark_project.pem \
         $WORK_DIR/bashrc \
         ubuntu@$MACHINE:/home/ubuntu/.bashrc
+done
+
+for MACHINE in $MACHINE_MASTER $MACHINE_1 $MACHINE_2 $MACHINE_3 $MACHINE_4 $MACHINE_5
+do
+    scp -i $WORK_DIR/spark_project.pem \
+        $WORK_DIR/cpuPunisher/cpuPunisher \
+        ubuntu@$MACHINE:/home/ubuntu/
+done
+
+for MACHINE in $MACHINE_MASTER $MACHINE_1 $MACHINE_2 $MACHINE_3 $MACHINE_4 $MACHINE_5
+do
+    ssh -i $WORK_DIR/spark_project.pem ubuntu@$MACHINE "rm -rf /home/ubuntu/cpuPunisher"
 done
 
 

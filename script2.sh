@@ -48,6 +48,3 @@ done
 #start spark shell
 cd spark
 ./bin/spark-shell --master spark://ip-172-31-23-88.ec2.internal:7077
-
-
-
